@@ -584,11 +584,87 @@ function checkWinner()
   document.getElementById('id').innerHTML="winner is red";
 
 }
+function autoNextTurn()
+{
+     if(turn == 'yellow')
+     {
+          var ok=true;
+          var i;
+          for(i=0;i<4;i++)
+          {
+               if(yellow[i].pos!=-1 && random <= 56-yellow[i].pos)
+               ok=false;
+               else if(yellow[i].pos==-1 && random==6)
+               ok=false;
+          }
+          if(ok)
+          {
+               turn='green';
+               whichYellow=-1;
+               random=0;
+          }
+     }
+     else if(turn == 'green')
+     {
+          var ok=true;
+          var i;
+          for(i=0;i<4;i++)
+          {
+               if(green[i].pos!=-1 && random <= 56-green[i].pos)
+               ok=false;
+               else if(green[i].pos==-1 && random==6)
+               ok=false;
+          }
+          if(ok)
+          {
+               turn='red';
+               whichGreen=-1;
+               random=0;
+          }
+     }
+     else if(turn == 'red')
+     {
+          var ok=true;
+          var i;
+          for(i=0;i<4;i++)
+          {
+               if(red[i].pos!=-1 && random <= 56-red[i].pos)
+               ok=false;
+               else if(red[i].pos==-1 && random==6)
+               ok=false;
+          }
+          if(ok)
+          {
+               turn='blue';
+               whichRed=-1;
+               random=0;
+          }
+     }
+     else if(turn == 'blue')
+     {
+          var ok=true;
+          var i;
+          for(i=0;i<4;i++)
+          {
+               if(blue[i].pos!=-1 && random <= 56-blue[i].pos)
+               ok=false;
+               else if(blue[i].pos==-1 && random==6)
+               ok=false;
+          }
+          if(ok)
+          {
+               turn='yellow';
+               whichBlue=-1;
+               random=0;
+          }
+     }
+}
 function updateGameArea() {
     myGameArea.clear();
     myBackground.newPos();
     myBackground.update();
     if(random!=0){
+      autoNextTurn(); //function for automatic next turn if possible;
       if(whichYellow!=-1)
       {
         if(yellow[0].pos==-1 && yellow[1].pos==-1 && yellow[2].pos==-1 && yellow[3].pos==-1 && random!=6)
@@ -597,7 +673,7 @@ function updateGameArea() {
           turn='green';
           whichYellow=-1;
         }
-        else if (yellow[whichYellow].pos==-1 && random!=6) {
+        else if (yellow[whichYellow].pos==-1 && random!=6) {     //if on
           document.getElementById('id1').innerHTML="try another button";
         }
         else if(random > 56-yellow[whichYellow].pos){
